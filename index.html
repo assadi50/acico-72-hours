@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>72 Hours at the Plant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* ACICO Group palette: signature orange + industrial grey on warm concrete. Layout: top command bar, scene canvas, crisis-team dock. */
+  --orange:#E06931; --orange-d:#B9501F; --orange-l:#FCEDE4;
+  --grey:#818181; --ink:#262626; --sub:#5d5d5d;
+  --bg:#F4F2EF; --card:#FFFFFF; --line:#E4DFD8; --soft:#F8F6F3;
+  --safety:#E06931; --trust:#5B6D80; --cont:#2F9283;
+  --good:#2E9E6B; --warn:#D99A16; --bad:#D04437;
+  --font:"Readex Pro","Segoe UI",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.5;
+  background-image:linear-gradient(rgba(0,0,0,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.025) 1px,transparent 1px);background-size:28px 28px}
+button,input,select{font-family:inherit;font-size:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+h1,h2,h3,h4{margin:0;text-wrap:balance}
+
+/* ---------- top bar ---------- */
+.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-top:4px solid var(--orange);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:12px;padding:10px 18px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:44px;height:44px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px;letter-spacing:.5px}
+.brand b{display:block;font-size:19px;line-height:1.1}
+.brand small{color:var(--grey);font-size:12px}
+.dots{display:flex;gap:8px;align-items:center}
+.dot{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font:600 11px var(--mono);color:var(--grey);background:#fff}
+.dot.now{background:var(--orange);border-color:var(--orange);color:#fff;box-shadow:0 0 0 4px var(--orange-l)}
+.dot.done{background:var(--ink);border-color:var(--ink);color:#fff}
+.sp{flex:1}
+.clockbox{display:flex;align-items:center;gap:8px;font:600 22px var(--mono)}
+.clockbox small{font:500 11px var(--font);color:var(--grey);display:block;line-height:1.1;text-align:right}
+.clockbox.hot{color:var(--bad)}
+.rings{display:flex;gap:10px}
+.ring{display:flex;align-items:center;gap:8px}
+.ring svg{display:block}
+.ring b{font:600 18px var(--mono);display:block;line-height:1}
+.ring small{font-size:11px;color:var(--sub)}
+.pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;display:flex;gap:6px;align-items:center}
+.pill b{font-family:var(--mono);color:var(--orange)}
+.iconbtn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;color:var(--sub)}
+
+/* ---------- layout ---------- */
+main{max-width:1320px;margin:0 auto;padding:22px 22px 130px}
+.grid2{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}
+.eyebrow{font-size:12.5px;color:var(--orange-d);font-weight:600;letter-spacing:.3px}
+.muted{color:var(--sub)}
+.mono{font-family:var(--mono)}
+
+/* intro hero */
+.hero{display:grid;grid-template-columns:1fr 330px;gap:10px;align-items:center;position:relative;overflow:hidden;background:linear-gradient(135deg,#fff 0%,#fff 55%,var(--orange-l) 100%)}
+.hero h1{font-size:52px;line-height:.98;font-weight:700;letter-spacing:-1px;margin:8px 0 14px}
+.hero h1 em{font-style:normal;color:var(--orange)}
+.hero p{max-width:56ch;color:var(--sub);font-size:16.5px;margin:0}
+.memo{font-size:15px}
+.memo .hdr{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:13px;color:var(--sub);border-bottom:1px dashed var(--line);padding-bottom:10px;margin-bottom:12px}
+.memo ol{padding-left:22px;margin:10px 0}
+.memo li{margin:6px 0}
+.memo li::marker{color:var(--orange);font-weight:700}
+.tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:18px}
+.tile{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.tile b{font:600 30px var(--mono);display:block;letter-spacing:-.5px}
+.tile b small{font-size:14px;color:var(--grey);margin-left:3px}
+.tile span{font-size:13px;color:var(--sub)}
+.seats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:12px}
+.seat{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff}
+.seat .av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:13px;margin-bottom:8px}
+.seat b{display:block;font-size:15px}
+.seat p{margin:4px 0 0;font-size:13px;color:var(--sub)}
+.seat input{margin-top:10px;width:100%;border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-size:13px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:#fff}
+.seg button{border:0;background:none;padding:7px 14px;border-radius:999px;color:var(--sub)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.startrow{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:18px}
+.btn{border:0;border-radius:12px;background:var(--orange);color:#fff;padding:14px 24px;font-weight:600;font-size:16px;display:inline-flex;gap:10px;align-items:center}
+.btn:hover{background:var(--orange-d)}
+.btn.dark{background:var(--ink)}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{background:#cfcac4;cursor:not-allowed}
+
+/* scene header */
+.shead{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap;margin-bottom:16px}
+.shead h2{font-size:40px;line-height:1.05;font-weight:700;letter-spacing:-.5px}
+.shead p{max-width:70ch;margin:8px 0 0;color:var(--sub);font-size:16px}
+.own{display:flex;gap:8px;flex-wrap:wrap}
+.own span{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;display:flex;align-items:center;gap:6px}
+.own i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.alert{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-left:5px solid var(--bad);border-radius:12px;padding:12px 14px;margin-bottom:14px}
+.alert b{font:600 12px var(--mono);color:var(--bad);white-space:nowrap;padding-top:2px}
+.alert.info{border-left-color:var(--orange)}.alert.info b{color:var(--orange)}
+
+/* generic blocks */
+.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
+.panel h4{font-size:15px;display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.panel h4 small{font-weight:400;color:var(--grey);font-size:12px}
+.cols3{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:16px}
+.chipq{display:grid;gap:8px}
+.ask{display:flex;justify-content:space-between;gap:10px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--soft);border-radius:10px;padding:10px 12px;color:var(--ink)}
+.ask:hover:not(:disabled){border-color:var(--orange)}
+.ask small{font:600 11px var(--mono);color:var(--bad)}
+.ask:disabled{cursor:default;background:#fff}
+.reveal{font-size:13.5px;background:var(--orange-l);border-radius:8px;padding:8px 10px;margin-top:-2px;animation:pop .35s}
+@keyframes pop{from{transform:scale(.97);opacity:.2}}
+
+.token{user-select:none;touch-action:none;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-size:14px;cursor:grab;display:flex;gap:8px;align-items:center;transition:box-shadow .15s,border-color .15s}
+.token:hover{border-color:var(--orange)}
+.token.sel{border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-l)}
+.token .tag{font:600 10.5px var(--mono);color:var(--grey);margin-left:auto}
+.slot{border:1.5px dashed #d5cec5;border-radius:12px;min-height:50px;padding:6px;display:flex;flex-direction:column;gap:6px;transition:background .15s,border-color .15s}
+.slot.over,.slot.armed{border-color:var(--orange);background:var(--orange-l)}
+.slot .ph{color:#aaa39a;font-size:13px;text-align:center;padding:10px}
+.slotlabel{font-size:13px;font-weight:600;margin-bottom:6px;display:flex;justify-content:space-between}
+.slotlabel small{color:var(--grey);font-weight:400}
+
+.hold{position:relative;overflow:hidden;border:0;border-radius:12px;background:var(--ink);color:#fff;padding:15px 22px;font-weight:600;font-size:16px;min-width:260px}
+.hold i{position:absolute;inset:0;width:0;background:var(--orange);transition:width .05s linear}
+.hold span{position:relative}
+.hold small{display:block;font-weight:400;font-size:11.5px;opacity:.75;position:relative}
+.hold:disabled{background:#cfcac4}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:18px}
+.foot .muted{font-size:14px}
+
+/* map */
+.map{width:100%;height:auto;display:block;border-radius:12px;background:#EEEAE4}
+.steam{animation:steam 3s ease-out infinite;transform-origin:center}
+@keyframes steam{0%{opacity:.75;transform:scale(.6)}100%{opacity:0;transform:scale(1.7)}}
+.blink{animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.25}}
+.prog{height:8px;background:var(--soft);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.prog i{display:block;height:100%;background:var(--orange);transition:width .5s}
+.rank{display:grid;gap:6px}
+.rank .token{cursor:default}
+.rank .mv{margin-left:auto;display:flex;gap:4px}
+.rank .mv button{border:1px solid var(--line);background:#fff;border-radius:6px;width:26px;height:26px;padding:0;font-size:12px}
+.rank .n{font:600 12px var(--mono);color:#fff;background:var(--ink);border-radius:6px;width:22px;height:22px;display:grid;place-items:center;flex:none}
+.toggles{display:grid;gap:8px}
+.tog{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--soft);font-size:14px}
+.tog input{accent-color:var(--orange);width:18px;height:18px}
+
+/* sort columns */
+.sortgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.sortcol{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}
+.sortcol h5{margin:0 0 4px;font-size:15px}
+.sortcol p{margin:0 0 8px;font-size:12.5px;color:var(--sub)}
+.pool{display:flex;flex-wrap:wrap;gap:8px}
+.pool .token{flex:1 1 280px}
+.why{font-size:12px;color:var(--sub);padding:0 4px 2px}
+.token.ok{border-color:var(--good);background:#eef8f2}.token.no{border-color:var(--bad);background:#fbeceb}
+
+/* statement */
+.phone{background:var(--ink);border-radius:26px;padding:12px;color:#fff}
+.phone .scr{background:#fff;color:var(--ink);border-radius:16px;padding:14px;min-height:320px}
+.views{font:600 32px var(--mono);color:var(--bad)}
+.feeditem{border-bottom:1px solid var(--line);padding:8px 0;font-size:13.5px}
+.feeditem b{font-size:12px;color:var(--grey);display:block}
+.qa{display:grid;gap:8px}
+.qa button{text-align:left;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px}
+.qa button:hover:not(:disabled){border-color:var(--orange)}
+.qa button.pick{border-color:var(--orange);background:var(--orange-l)}
+
+/* allocation */
+.cust{display:grid;grid-template-columns:1.4fr 1.3fr 1fr;gap:14px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:#fff}
+.cust b{display:block}
+.cust small{color:var(--sub);font-size:12.5px}
+.cust input[type=range]{width:100%;accent-color:var(--orange)}
+.cust select{width:100%;border:1px solid var(--line);border-radius:8px;padding:7px;background:#fff}
+.capbar{display:flex;height:22px;border-radius:8px;overflow:hidden;border:1px solid var(--line);background:var(--soft)}
+.capbar i{display:block;height:100%}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--sub);margin-top:6px}
+.legend i{width:10px;height:10px;display:inline-block;border-radius:3px;margin-right:5px;vertical-align:-1px}
+
+/* negotiation */
+.gauge text{font:500 11px var(--font);fill:var(--sub)}
+.person{display:flex;gap:12px;align-items:center}
+.person .av{width:54px;height:54px;border-radius:50%;background:var(--trust);color:#fff;display:grid;place-items:center;font-weight:700}
+.bubble{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:15px;position:relative;margin-top:10px}
+.interests{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.interests span{font-size:12.5px;border-radius:999px;padding:4px 10px;background:#eef2f6;color:var(--trust)}
+.interests span.hidden{background:var(--soft);color:#b2aba3;border:1px dashed #d5cec5}
+
+/* outcomes */
+.outc{display:grid;gap:8px}
+.oc{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;animation:pop .4s backwards}
+.oc i{width:26px;height:26px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;font-style:normal;font-weight:700;font-size:13px}
+.oc.g i{background:var(--good)}.oc.b i{background:var(--bad)}.oc.m i{background:var(--warn)}
+.oc b{display:block;font-size:14.5px}
+.oc small{color:var(--sub)}
+.deltas{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.deltas span{font:600 13px var(--mono);border-radius:8px;padding:5px 10px;background:var(--soft);border:1px solid var(--line)}
+.overlay{position:fixed;inset:0;background:rgba(30,26,22,.45);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
+.overlay.on{display:flex}
+.modal{background:#fff;border-radius:20px;max-width:760px;width:100%;max-height:90vh;overflow:auto;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.modal h3{font-size:24px;margin-bottom:4px}
+.picks{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 14px}
+.picks button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;font-size:13.5px}
+.picks button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* dock */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:10px 22px;display:flex;gap:10px;align-items:center;overflow-x:auto}
+.dock .lab{font-size:12px;color:var(--grey);white-space:nowrap}
+.dk{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:14px;padding:8px 14px;background:#fff;white-space:nowrap}
+.dk .av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:11px}
+.dk b{display:block;font-size:13.5px;line-height:1.2}
+.dk small{font-size:11.5px;color:var(--grey)}
+.dk.owner{border:2px solid var(--orange);background:var(--orange-l)}
+.dk.owner small{color:var(--orange-d);font-weight:600}
+.dk.appr{border-color:var(--ink)}
+
+/* results */
+.score{font:700 96px/1 var(--mono);color:var(--orange);letter-spacing:-3px}
+.verdict{font-size:26px;font-weight:700}
+.comp{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.cp{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff}
+.cp .bar{height:8px;border-radius:6px;background:var(--soft);overflow:hidden;margin:8px 0}
+.cp .bar i{display:block;height:100%}
+.cp small{color:var(--sub);font-size:12.5px}
+.tl{display:grid;gap:8px}
+.tlr{display:grid;grid-template-columns:110px 1fr 110px;gap:12px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:#fff}
+.tlr .g{font:600 13px var(--mono);text-align:right}
+.cm{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding:9px 0;font-size:14px}
+.cm:last-child{border:0}
+.badge{font:600 11px var(--mono);border-radius:999px;padding:3px 9px;white-space:nowrap;height:fit-content}
+.badge.k{background:#e5f4ec;color:var(--good)}.badge.r{background:#fbeceb;color:var(--bad)}.badge.p{background:#fdf3dc;color:#9a6c0c}
+
+.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
+@media (max-width:1100px){.grid2,.hero,.cols3{grid-template-columns:1fr}.tiles,.seats{grid-template-columns:repeat(2,1fr)}.sortgrid{grid-template-columns:1fr 1fr}.cust{grid-template-columns:1fr}.comp{grid-template-columns:1fr 1fr}.hero h1{font-size:48px}.rings{order:5}}
+@media (max-width:560px){.sortgrid,.comp,.tiles,.seats{grid-template-columns:1fr}.shead h2{font-size:30px}.tlr{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><div class="logo">ACICO</div><div><b>72 Hours at the Plant</b><small>Crisis management simulation &middot; prepared for ACICO Group</small></div></div>
+  <div class="dots" id="dots" aria-label="Scenes"></div>
+  <div class="sp"></div>
+  <div class="pill" title="Commitments made in ACICO's name">Commitments <b id="cmtCount">0</b></div>
+  <div class="clockbox" id="clockbox"><span>&#9719;</span><span id="clock">--:--</span><small id="clockLab">suggested<br>time</small></div>
+  <div class="rings" id="rings"></div>
+  <button class="iconbtn" id="snd" aria-label="Toggle sound" title="Sound">&#128266;</button>
+  <button class="iconbtn" id="fs" aria-label="Full screen" title="Full screen">&#x26F6;</button>
+</header>
+
+<main id="main"></main>
+<div class="dock" id="dock"></div>
+<div class="overlay" id="ov"><div class="modal" id="modal"></div></div>
+
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ================= DATA ================= */
+const SEATS=[
+ {id:"CL",name:"Crisis Lead",tier:"Strategic",col:"#E06931",desc:"Chairs the Crisis Management Team, sets priorities and faces the Board."},
+ {id:"IC",name:"Site Incident Commander",tier:"Operational",col:"#262626",desc:"Runs the response on the plant floor until the authorities take over."},
+ {id:"CM",name:"Communications Lead",tier:"Tactical",col:"#5B6D80",desc:"Owns every word ACICO says to staff, families, media and customers."},
+ {id:"OS",name:"Operations & Supply Lead",tier:"Tactical",col:"#2F9283",desc:"Protects production, stock and customer commitments."},
+ {id:"PH",name:"People & HSE Lead",tier:"Tactical",col:"#8C6BB1",desc:"Looks after the injured, their families, the shift team and the regulators."}
+];
+const SCENES=[
+ {n:1,key:"command",title:"First Response",at:"T+00:00 · Sun 02:47",skill:"Decisions under pressure",owner:"IC",appr:"CL",mins:4,hard:true},
+ {n:2,key:"structure",title:"Who Decides What",at:"T+01:00 · Sun 03:47",skill:"Crisis team structure",owner:"CL",appr:null,mins:6},
+ {n:3,key:"statement",title:"The Video",at:"T+03:00 · Sun 05:47",skill:"Crisis communication",owner:"CM",appr:"CL",mins:4,hard:true},
+ {n:4,key:"supply",title:"Supply on the Line",at:"T+08:00 · Sun 10:47",skill:"Business continuity",owner:"OS",appr:"CL",mins:7},
+ {n:5,key:"bank",title:"The Bank Calls",at:"T+24:00 · Mon 02:47",skill:"Stakeholder confidence",owner:"CL",appr:"PH",mins:6}
+];
+const RINGS=[["safety","Safety","var(--safety)","#E06931"],["trust","Trust","var(--trust)","#5B6D80"],["cont","Continuity","var(--cont)","#2F9283"]];
+
+/* ================= STATE ================= */
+let S={scene:-1,mode:"team",team:"Team 1",names:{},rings:{safety:50,trust:50,cont:50},commit:[],results:[],facts:{},sound:true};
+let tick=null, left=0;
+
+/* ================= AUDIO ================= */
+let actx=null;
+function beep(f=660,d=.18,type="sine",v=.05){ if(!S.sound)return; try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(v,actx.currentTime);g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+d);o.connect(g);g.connect(actx.destination);o.start();o.stop(actx.currentTime+d);}catch(e){} }
+const alarm=()=>{beep(880,.2,"square");setTimeout(()=>beep(660,.2,"square"),230);setTimeout(()=>beep(880,.2,"square"),460)};
+const okS=()=>{beep(523,.12,"triangle");setTimeout(()=>beep(784,.18,"triangle"),120)};
+const badS=()=>beep(196,.3,"sawtooth",.04);
+
+/* ================= CHROME ================= */
+function ringSVG(v,col){const r=17,c=2*Math.PI*r;return `<svg width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="${r}" fill="none" stroke="#ece7e1" stroke-width="5"/><circle cx="22" cy="22" r="${r}" fill="none" stroke="${col}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-v/100)}" transform="rotate(-90 22 22)" style="transition:stroke-dashoffset .9s"/></svg>`}
+function drawRings(){ $("#rings").innerHTML=RINGS.map(([k,l,,hex])=>`<div class="ring">${ringSVG(S.rings[k],hex)}<div><b>${S.rings[k]}</b><small>${l}</small></div></div>`).join(""); $("#cmtCount").textContent=S.commit.length; }
+function drawDots(){ $("#dots").innerHTML=SCENES.map((s,i)=>`<span class="dot ${i===S.scene?"now":i<S.scene?"done":""}" title="Scene ${s.n}: ${esc(s.title)}">${i<S.scene?"&#10003;":s.n}</span>`).join("")+`<span class="dot ${S.scene>=SCENES.length?"now":""}" title="Board review">B</span>`; }
+const seatName=id=>{const s=SEATS.find(x=>x.id===id);const nm=S.names[id];return nm?`${s.name} (${nm})`:s.name};
+function drawDock(){
+  const sc=SCENES[S.scene];
+  $("#dock").innerHTML=`<span class="lab">${esc(S.team)} &middot; crisis team</span>`+SEATS.map(s=>{
+    const own=sc&&sc.owner===s.id, ap=sc&&sc.appr===s.id;
+    return `<div class="dk ${own?"owner":ap?"appr":""}"><span class="av" style="background:${s.col}">${s.id}</span><div><b>${esc(S.names[s.id]||s.name)}</b><small>${own?"decision owner now":ap?"approves":s.tier}</small></div></div>`}).join("");
+}
+function chrome(){drawRings();drawDots();drawDock();}
+function bump(fx){ Object.entries(fx).forEach(([k,v])=>S.rings[k]=Math.max(0,Math.min(100,Math.round(S.rings[k]+v)))); drawRings(); }
+
+/* ================= TIMER ================= */
+function startClock(mins,hard,onEnd){
+  clearInterval(tick); left=Math.round(mins*60); const cb=$("#clockbox"); cb.classList.remove("hot");
+  $("#clockLab").innerHTML=hard?"scene<br>deadline":"suggested<br>time";
+  const draw=()=>{const m=Math.floor(Math.max(left,0)/60),s=Math.max(left,0)%60;$("#clock").textContent=`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;};
+  draw();
+  tick=setInterval(()=>{left--;draw(); if(hard&&left<=30){cb.classList.add("hot"); if(left<=10&&left>0)beep(1000,.06);} if(left<=0){ if(hard){clearInterval(tick); onEnd&&onEnd();} else if(left<-600)clearInterval(tick);} },1000);
+}
+function spend(sec){left-=sec;}
+function stopClock(){clearInterval(tick);}
+
+/* ================= HOLD-TO-APPROVE ================= */
+function holdBtn(id,label,sub){return `<button class="hold" id="${id}"><i></i><span>${label}</span><small>${sub||"press and hold to approve"}</small></button>`}
+function wireHold(id,done){
+  const b=document.getElementById(id); if(!b)return; let t=null,st=0; const bar=b.querySelector("i");
+  const down=e=>{ if(b.disabled)return; e.preventDefault(); st=performance.now(); t=setInterval(()=>{const p=Math.min(1,(performance.now()-st)/1100);bar.style.width=(p*100)+"%"; if(p>=1){clearInterval(t);t=null;b.disabled=true;okS();done();}},30);};
+  const up=()=>{ if(t){clearInterval(t);t=null;bar.style.width="0";} };
+  b.addEventListener("pointerdown",down); ["pointerup","pointerleave","pointercancel"].forEach(ev=>b.addEventListener(ev,up));
+  b.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&!b.disabled){e.preventDefault();b.disabled=true;okS();done();}});
+}
+
+/* ================= DRAG / TAP-TO-PLACE ================= */
+let selected=null;
+function dnd(root,onChange,opts={}){
+  const max=opts.max||{};
+  root.querySelectorAll(".token[data-id]").forEach(t=>{
+    t.draggable=true;
+    t.addEventListener("dragstart",e=>{e.dataTransfer.setData("text/plain",t.dataset.id);t.classList.add("sel");});
+    t.addEventListener("dragend",()=>t.classList.remove("sel"));
+    t.addEventListener("click",e=>{ const ps=t.parentElement; if(selected&&selected!==t&&ps._put&&ps.dataset.slot!=="pool"){e.stopPropagation();ps._put(selected.dataset.id);return;} if(selected===t){t.classList.remove("sel");selected=null;root.querySelectorAll(".slot").forEach(s=>s.classList.remove("armed"));return;}
+      root.querySelectorAll(".token.sel").forEach(x=>x.classList.remove("sel")); selected=t;t.classList.add("sel"); root.querySelectorAll(".slot").forEach(s=>s.classList.add("armed")); });
+  });
+  root.querySelectorAll(".slot").forEach(sl=>{
+    const put=id=>{ const t=root.querySelector(`.token[data-id="${id}"]`); if(!t)return; const lim=+sl.dataset.max||max[sl.dataset.slot]||99;
+      const cur=sl.querySelectorAll(".token").length; if(cur>=lim&&t.parentElement!==sl){ const first=sl.querySelector(".token"); const pool=root.querySelector(".slot[data-slot='pool']"); if(first&&pool){pool.appendChild(first);} else {sl.classList.add("shake");setTimeout(()=>sl.classList.remove("shake"),400);return;} }
+      sl.appendChild(t); t.classList.remove("sel"); selected=null; root.querySelectorAll(".slot").forEach(s=>s.classList.remove("armed")); refreshPh(root); beep(560,.06,"triangle",.03); onChange&&onChange(); };
+    sl._put=put;
+    sl.addEventListener("dragover",e=>{e.preventDefault();sl.classList.add("over");});
+    sl.addEventListener("dragleave",()=>sl.classList.remove("over"));
+    sl.addEventListener("drop",e=>{e.preventDefault();sl.classList.remove("over");put(e.dataTransfer.getData("text/plain"));});
+    sl.addEventListener("click",e=>{ if(selected&&!e.target.closest(".token")) put(selected.dataset.id); });
+  });
+  refreshPh(root);
+}
+function refreshPh(root){ root.querySelectorAll(".slot").forEach(sl=>{ const has=sl.querySelector(".token"); let ph=sl.querySelector(".ph"); if(!has&&!ph){ph=document.createElement("div");ph.className="ph";ph.textContent=sl.dataset.ph||"Drop here";sl.appendChild(ph);} if(has&&ph)ph.remove(); }); }
+const inSlot=(root,slot)=>[...root.querySelectorAll(`.slot[data-slot="${slot}"] .token`)].map(t=>t.dataset.id);
+
+/* ================= COMMON SCENE PIECES ================= */
+function sceneHead(sc,lead){
+  const owner=SEATS.find(s=>s.id===sc.owner), appr=sc.appr&&SEATS.find(s=>s.id===sc.appr);
+  return `<div class="shead"><div><div class="eyebrow">Scene ${sc.n} of ${SCENES.length} &middot; ${sc.at} &middot; measures: ${sc.skill}</div><h2>${sc.title}</h2><p>${lead}</p></div>
+  <div class="own"><span><i style="background:${owner.col}"></i>Decision owner: ${esc(seatName(owner.id))}</span>${appr?`<span><i style="background:${appr.col}"></i>Approves: ${esc(seatName(appr.id))}</span>`:""}</div></div>`;
+}
+function addCommit(text,scene,check){S.commit.push({text,scene,check});drawRings();beep(740,.1,"triangle",.03);}
+function finishScene(res){
+  stopClock(); S.results[S.scene]=res; bump(res.fx);
+  (res.fx.safety<0||res.fx.trust<0||res.fx.cont<0)&&Object.values(res.fx).reduce((a,b)=>a+b,0)<0?badS():okS();
+  const total=Object.values(res.fx).reduce((a,b)=>a+b,0);
+  const fmt=v=>(v>0?"+":"")+v;
+  $("#modal").innerHTML=`<div class="eyebrow">Scene ${SCENES[S.scene].n} &middot; consequences</div><h3>${esc(res.head)}</h3><p class="muted" style="margin:4px 0 14px">${esc(res.sub)}</p>
+   <div class="outc">${res.lines.map((l,i)=>`<div class="oc ${l[0]}" style="animation-delay:${i*.12}s"><i>${l[0]==="g"?"&#10003;":l[0]==="b"?"!":"~"}</i><div><b>${esc(l[1])}</b><small>${esc(l[2]||"")}</small></div></div>`).join("")}</div>
+   <div class="deltas">${RINGS.map(([k,l])=>`<span style="color:${res.fx[k]>0?"var(--good)":res.fx[k]<0?"var(--bad)":"var(--sub)"}">${l} ${fmt(res.fx[k]||0)}</span>`).join("")}</div>
+   <div class="alert info" style="margin-top:14px"><b>LESSON</b><span>${esc(res.lesson)}</span></div>
+   <div class="foot"><span class="muted">${total>=12?"Strong scene for the team.":total>=0?"Mixed result: note it for the review.":"Costly scene: the Board will ask about it."}</span><button class="btn" id="goNext">${S.scene<SCENES.length-1?"Move to the next scene &rarr;":"Go to the Board review &rarr;"}</button></div>`;
+  $("#ov").classList.add("on"); $("#goNext").focus();
+  $("#goNext").onclick=()=>{$("#ov").classList.remove("on");S.scene++; S.scene<SCENES.length?renderScene():renderResults();};
+}
+
+/* ================= INTRO ================= */
+function renderIntro(){
+  S.scene=-1; chrome(); $("#clock").textContent="45:00"; $("#clockLab").innerHTML="play<br>time";
+  $("#main").innerHTML=`
+  <div class="grid2">
+   <section class="card hero">
+     <div><div class="eyebrow">Crisis Management simulation &middot; Knowledge Group</div>
+      <h1>72 Hours<br>at the <em>Plant</em></h1>
+      <p>At 02:47 on a Sunday, an autoclave fails at one of the Group&rsquo;s aerated concrete block plants. Your crisis team has 72 hours to protect people, keep customers supplied and hold the confidence of everyone watching. Five scenes, five decision owners, then the Board review.</p></div>
+     <svg viewBox="0 0 300 300" width="100%" aria-label="Autoclave pressure gauge" role="img">
+      <defs><linearGradient id="gz" x1="0" x2="1"><stop offset="0" stop-color="#2F9283"/><stop offset=".6" stop-color="#D99A16"/><stop offset="1" stop-color="#D04437"/></linearGradient></defs>
+      <circle cx="150" cy="150" r="128" fill="#fff" stroke="#E4DFD8" stroke-width="2"/>
+      <circle cx="150" cy="150" r="100" fill="none" stroke="#F4F2EF" stroke-width="16"/>
+      <path d="M 66 210 A 100 100 0 1 1 234 210" fill="none" stroke="url(#gz)" stroke-width="16" stroke-linecap="round"/>
+      ${Array.from({length:17},(_,i)=>{const a=(-210+i*15)*Math.PI/180;const x1=150+Math.cos(a)*82,y1=150+Math.sin(a)*82,x2=150+Math.cos(a)*(i%4===0?66:74),y2=150+Math.sin(a)*(i%4===0?66:74);return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#818181" stroke-width="${i%4===0?2.5:1.2}"/>`}).join("")}
+      <text x="150" y="205" text-anchor="middle" font-family="JetBrains Mono" font-size="26" font-weight="600" fill="#262626" id="barTxt">12.4</text>
+      <text x="150" y="225" text-anchor="middle" font-family="Readex Pro" font-size="11" fill="#818181">bar &middot; Autoclave 3</text>
+      <g id="needle"><line x1="150" y1="150" x2="150" y2="70" stroke="#E06931" stroke-width="4" stroke-linecap="round"/><circle cx="150" cy="150" r="9" fill="#262626"/></g>
+     </svg>
+   </section>
+   <section class="card memo">
+     <div class="hdr"><span>From: Group CEO</span><span>To: Crisis Management Team</span><span class="mono">ACT-72/01</span></div>
+     <p style="margin:0 0 6px">The night shift at the plant has reported a steam release in Hall B. I am activating the Crisis Management Team. Over the next 72 hours I expect you to:</p>
+     <ol><li>Protect every person on site and in the neighbouring accommodation.</li><li>Take control quickly with clear roles and decision rights.</li><li>Tell the truth early, to staff, families, customers and the public.</li><li>Keep critical customers supplied and protect the Group&rsquo;s finances.</li><li>Keep only the commitments you can keep. The Board will review every one.</li></ol>
+     <p class="muted" style="font-size:12.5px;margin:0">Fictional scenario for training. Names, places and figures are invented.</p>
+   </section>
+  </div>
+  <div class="tiles">
+   <div class="tile"><b>34</b><span>workers on the night shift</span></div>
+   <div class="tile"><b>12.4<small>bar</small></b><span>pressure in Autoclave 3 when the seal failed</span></div>
+   <div class="tile"><b>4<small>days</small></b><span>of finished AAC block stock</span></div>
+   <div class="tile"><b>5,700<small>m&sup3;</small></b><span>owed to customers in the next 14 days</span></div>
+   <div class="tile"><b>9<small>mo</small></b><span>since the financial restructuring was agreed</span></div>
+  </div>
+  <section class="card" style="margin-top:18px">
+   <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><h3 style="font-size:22px">Who sits at the crisis table? <small class="muted" style="font-weight:400;font-size:14px">Each seat owns decisions, and gets its own line in the Board review</small></h3>
+     <div class="seg" role="group"><button id="mTeam" aria-pressed="true">Team in the room</button><button id="mSolo" aria-pressed="false">Solo run</button></div></div>
+   <div class="seats">${SEATS.map(s=>`<div class="seat"><div class="av" style="background:${s.col}">${s.id}</div><b>${s.name}</b><p>${s.desc}</p><input id="nm-${s.id}" placeholder="Participant name (optional)" aria-label="${s.name} name"></div>`).join("")}</div>
+   <div class="startrow"><label for="teamName" class="muted">Team name</label><input id="teamName" value="Team 1" style="border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:200px">
+     <button class="btn" id="go">Take the call at 02:47 &rarr;</button><span class="muted" style="font-size:13.5px">About 30 minutes of play and 30 minutes of review &middot; shown on the team screen, every decision goes to its owner.</span></div>
+  </section>`;
+  // needle animation
+  const nd=$("#needle"); let a=0;
+  const anim=()=>{ if(!document.getElementById("needle"))return; a+=0.035; const v=Math.min(1,0.55+0.42*Math.abs(Math.sin(a))+0.03*Math.sin(a*7)); nd.setAttribute("transform",`rotate(${-120+v*240} 150 150)`); $("#barTxt").textContent=(4+v*9.5).toFixed(1); requestAnimationFrame(anim); };
+  if(!matchMedia("(prefers-reduced-motion: reduce)").matches)requestAnimationFrame(anim); else nd.setAttribute("transform","rotate(80 150 150)");
+  $("#mTeam").onclick=()=>{S.mode="team";$("#mTeam").setAttribute("aria-pressed","true");$("#mSolo").setAttribute("aria-pressed","false");$$(".seat input").forEach(i=>i.disabled=false)};
+  $("#mSolo").onclick=()=>{S.mode="solo";$("#mSolo").setAttribute("aria-pressed","true");$("#mTeam").setAttribute("aria-pressed","false");$$(".seat input").forEach(i=>i.disabled=true)};
+  $("#go").onclick=()=>{ S.team=$("#teamName").value.trim()||"Team 1"; S.names={}; if(S.mode==="team")SEATS.forEach(s=>{const v=$("#nm-"+s.id).value.trim(); if(v)S.names[s.id]=v;});
+    S.rings={safety:50,trust:50,cont:50};S.commit=[];S.results=[];S.facts={};S.scene=0;alarm();renderScene(); };
+}
+
+/* ================= SCENES ================= */
+function renderScene(){ chrome(); window.scrollTo({top:0,behavior:"smooth"}); ({command:scCommand,structure:scStructure,statement:scStatement,supply:scSupply,bank:scBank})[SCENES[S.scene].key](SCENES[S.scene]); }
+
+/* ---------- Scene 1: incident command ---------- */
+function scCommand(sc){
+  const INFO=[
+   {id:"wind",who:"Control room",q:"Wind and plume direction",cost:20,a:"North-westerly wind at 22 km/h. Steam and smoke are drifting south-east, towards the workers’ accommodation block."},
+   {id:"count",who:"Shift supervisor",q:"Head count at the muster point",cost:20,a:"31 of 34 accounted for. Missing: two operators near Autoclave 3, and one technician last seen in the boiler house."},
+   {id:"press",who:"Maintenance on call",q:"State of the other autoclaves",cost:20,a:"Autoclaves 1 and 2 are still at 12 bar. They must be isolated and vented under control, or the risk spreads."},
+   {id:"gate",who:"Security gate",q:"Access for the Fire Force",cost:20,a:"South gate is blocked by 6 waiting trucks. North gate is clear and closest to Hall B."}];
+  const PRI=[["rescue","Find and rescue the three missing people"],["isolate","Isolate the pressurised autoclaves"],["protect","Protect the accommodation from the plume"],["order","Keep Line 2 running for the government order"]];
+  const UNITS=[["fire","Plant fire team","4 trained responders, BA sets"],["aid","First-aid team","2 first-aiders, stretcher"],["maint","Maintenance crew","3 technicians, isolation tools"],["sec","Security team","2 guards, vehicle"]];
+  const SECT=[["rescue","Search & rescue","Hall B and boiler house"],["isolate","Isolate Autoclaves 1–2","Valve room, Hall B"],["evac","Accommodation","Wake and move residents"],["gate","Gate & Fire Force","Guide responders in"]];
+  let order=PRI.map(p=>p[0]); const asked=new Set();
+  $("#main").innerHTML=sceneHead(sc,"The alarm is still sounding. Information is incomplete and every call you make costs time. Build the picture, set priorities, assign your four teams and approve the response plan before the deadline.")+
+  `<div class="alert"><b>02:47 REPORT</b><span>Shift supervisor on radio: &ldquo;Steam everywhere in Hall B! Two of ours are down near Autoclave 3. Line 2 in Hall A is still running.&rdquo;</span></div>
+  <div class="cols3">
+   <div class="panel"><h4>Plant layout <small id="mapHint">wind unknown</small></h4>
+    <svg class="map" viewBox="0 0 520 380" role="img" aria-label="Plant site map">
+     <rect x="0" y="0" width="520" height="380" fill="#EEEAE4"/>
+     <rect x="20" y="168" width="480" height="22" fill="#dcd6ce"/><text x="30" y="183" font-size="10" fill="#818181" font-family="Readex Pro">internal road</text>
+     <rect x="40" y="40" width="170" height="110" rx="8" fill="#fff" stroke="#c9c2b9"/><text x="52" y="60" font-size="13" font-weight="600" fill="#262626" font-family="Readex Pro">Hall A</text><text x="52" y="76" font-size="10.5" fill="#818181" font-family="Readex Pro">Line 2 &middot; cutting &amp; curing</text>
+     <circle cx="190" cy="56" r="6" fill="#2E9E6B" class="blink" id="l2dot"/><text x="150" y="140" font-size="10" fill="#2E9E6B" font-family="JetBrains Mono" id="l2txt">RUNNING</text>
+     <rect x="240" y="40" width="190" height="110" rx="8" fill="#fff" stroke="#D04437" stroke-width="2"/><text x="252" y="60" font-size="13" font-weight="600" fill="#262626" font-family="Readex Pro">Hall B</text><text x="252" y="76" font-size="10.5" fill="#818181" font-family="Readex Pro">Autoclaves 1 &middot; 2 &middot; 3</text>
+     ${[0,1,2].map(i=>`<rect x="${258+i*56}" y="92" width="46" height="34" rx="17" fill="${i===2?"#fbeceb":"#F4F2EF"}" stroke="${i===2?"#D04437":"#a39c93"}"/><text x="${281+i*56}" y="113" text-anchor="middle" font-size="11" font-family="JetBrains Mono" fill="#262626">AC${i+1}</text>`).join("")}
+     <circle cx="393" cy="109" r="26" fill="#ffffff" class="steam"/><circle cx="380" cy="95" r="18" fill="#ffffff" class="steam" style="animation-delay:1.2s"/>
+     <rect x="440" y="40" width="64" height="60" rx="6" fill="#fff" stroke="#c9c2b9"/><text x="448" y="60" font-size="11" font-weight="600" font-family="Readex Pro" fill="#262626">Boiler</text><text x="448" y="74" font-size="10" font-family="Readex Pro" fill="#818181">house</text>
+     <circle cx="80" cy="235" r="20" fill="#fff" stroke="#c9c2b9"/><circle cx="128" cy="235" r="20" fill="#fff" stroke="#c9c2b9"/><text x="70" y="275" font-size="10.5" font-family="Readex Pro" fill="#818181">Lime &amp; cement silos</text>
+     <rect x="330" y="230" width="170" height="90" rx="8" fill="#fff" stroke="#c9c2b9" id="accom"/><text x="342" y="252" font-size="13" font-weight="600" font-family="Readex Pro" fill="#262626">Workers&rsquo; accommodation</text><text x="342" y="268" font-size="10.5" font-family="Readex Pro" fill="#818181">~120 residents, asleep</text>
+     <rect x="200" y="214" width="90" height="40" rx="6" fill="#fff" stroke="#c9c2b9"/><text x="208" y="238" font-size="11" font-family="Readex Pro" fill="#262626">Control room</text>
+     <g><rect x="150" y="0" width="80" height="18" fill="#262626"/><text x="190" y="13" text-anchor="middle" font-size="10" font-family="Readex Pro" fill="#fff">NORTH GATE</text></g>
+     <g><rect x="180" y="362" width="80" height="18" fill="#262626"/><text x="220" y="375" text-anchor="middle" font-size="10" font-family="Readex Pro" fill="#fff">SOUTH GATE</text></g>
+     <g id="trucks" style="display:none">${[0,1,2,3,4,5].map(i=>`<rect x="${120+i*24}" y="338" width="18" height="10" rx="2" fill="#818181"/>`).join("")}</g>
+     <circle cx="70" cy="18" r="13" fill="#fff" stroke="#2E9E6B" stroke-width="2"/><text x="70" y="22" text-anchor="middle" font-size="10" font-family="JetBrains Mono" fill="#2E9E6B">A</text><text x="88" y="22" font-size="10" font-family="Readex Pro" fill="#262626">Muster A</text>
+     <circle cx="300" cy="345" r="13" fill="#fff" stroke="#D99A16" stroke-width="2"/><text x="300" y="349" text-anchor="middle" font-size="10" font-family="JetBrains Mono" fill="#D99A16">B</text><text x="318" y="349" font-size="10" font-family="Readex Pro" fill="#262626">Muster B</text>
+     <g id="wind" style="display:none"><path d="M300 150 C 340 190, 370 210, 400 232" fill="none" stroke="#D04437" stroke-width="4" stroke-dasharray="8 6"/><polygon points="400,232 386,228 396,218" fill="#D04437"/><text x="335" y="192" font-size="11" font-family="JetBrains Mono" fill="#D04437">plume &rarr; SE</text></g>
+     <g id="missing" style="display:none"><circle cx="372" cy="138" r="7" fill="#D04437"/><circle cx="386" cy="138" r="7" fill="#D04437"/><circle cx="472" cy="88" r="7" fill="#D04437"/></g>
+    </svg>
+    <div style="margin-top:10px" class="slotlabel"><span>Picture completeness</span><small id="pctTxt">0%</small></div><div class="prog"><i id="pct" style="width:0"></i></div>
+   </div>
+   <div class="panel"><h4>Request information <small>each call costs 20 s</small></h4>
+     <div class="chipq">${INFO.map(i=>`<button class="ask" data-i="${i.id}"><span><b style="font-size:13.5px">${i.who}</b><br><span style="font-size:13px" class="muted">${i.q}</span></span><small>&minus;${i.cost}s</small></button><div id="rv-${i.id}"></div>`).join("")}</div>
+   </div>
+   <div class="panel"><h4>Priorities <small>rank from the top</small></h4>
+     <div class="rank" id="rank"></div>
+     <h4 style="margin-top:16px">Immediate actions</h4>
+     <div class="toggles">
+       <label class="tog"><input type="checkbox" id="t112"> Call 112 and the Kuwait Fire Force now</label>
+       <label class="tog"><input type="checkbox" id="tstop"> Stop Line 2 and clear Hall A</label>
+       <div class="tog" style="flex-wrap:wrap">Muster point:
+         <label><input type="radio" name="must" value="A"> A &middot; north</label>
+         <label><input type="radio" name="must" value="B" checked> B &middot; south yard</label></div>
+     </div>
+   </div>
+  </div>
+  <div class="panel" style="margin-top:16px" id="assign"><h4>Assign your teams <small>drag a team onto a sector, or tap the team and then the sector</small></h4>
+    <div class="slot" data-slot="pool" data-ph="All teams assigned" style="flex-direction:row;flex-wrap:wrap;min-height:56px">${UNITS.map(u=>`<div class="token" data-id="${u[0]}"><b>${u[1]}</b><span class="tag">${u[2]}</span></div>`).join("")}</div>
+    <div class="sortgrid" style="margin-top:12px">${SECT.map(s=>`<div><div class="slotlabel"><span>${s[1]}</span><small>${s[2]}</small></div><div class="slot" data-slot="${s[0]}" data-max="1" data-ph="Drop a team"></div></div>`).join("")}</div>
+  </div>
+  <div class="foot"><span class="muted" id="hint">Approve when the plan is ready. If the deadline passes, the plan is approved as it stands.</span>${holdBtn("approve1","Approve the response plan")}</div>`;
+  const drawRank=()=>{$("#rank").innerHTML=order.map((k,i)=>`<div class="token"><span class="n">${i+1}</span><span style="font-size:13.5px">${PRI.find(p=>p[0]===k)[1]}</span><span class="mv"><button data-up="${i}" aria-label="Move up">&#9650;</button><button data-dn="${i}" aria-label="Move down">&#9660;</button></span></div>`).join("");
+    $$("#rank [data-up]").forEach(b=>b.onclick=()=>{const i=+b.dataset.up;if(i>0){[order[i-1],order[i]]=[order[i],order[i-1]];drawRank();}});
+    $$("#rank [data-dn]").forEach(b=>b.onclick=()=>{const i=+b.dataset.dn;if(i<order.length-1){[order[i+1],order[i]]=[order[i],order[i+1]];drawRank();}});};
+  order=["order","isolate","rescue","protect"]; drawRank();
+  $$(".ask").forEach(b=>b.onclick=()=>{const i=INFO.find(x=>x.id===b.dataset.i); if(asked.has(i.id))return; asked.add(i.id); spend(i.cost); b.disabled=true; beep(440,.08);
+    $("#rv-"+i.id).innerHTML=`<div class="reveal">${esc(i.a)}</div>`; const p=asked.size/4*100;$("#pct").style.width=p+"%";$("#pctTxt").textContent=p+"%";
+    if(i.id==="wind"){$("#wind").style.display="";$("#mapHint").textContent="plume heading south-east";}
+    if(i.id==="count")$("#missing").style.display=""; if(i.id==="gate")$("#trucks").style.display="";});
+  $("#tstop").onchange=e=>{$("#l2txt").textContent=e.target.checked?"STOPPED":"RUNNING";$("#l2dot").setAttribute("fill",e.target.checked?"#D04437":"#2E9E6B");};
+  dnd($("#assign"));
+  const evaluate=(timedOut)=>{
+    const a={}; SECT.forEach(s=>a[s[0]]=inSlot($("#assign"),s[0])[0]);
+    const must=(document.querySelector("input[name=must]:checked")||{}).value;
+    const c112=$("#t112").checked, stop=$("#tstop").checked; const lines=[]; const fx={safety:0,trust:0,cont:0};
+    if(c112){fx.safety+=8;lines.push(["g","Fire Force and ambulances on site in 11 minutes","Called at the first decision point."]);} else {fx.safety-=10;fx.trust-=4;lines.push(["b","Emergency services called late, by a neighbour","22 minutes lost before professional help arrived."]);}
+    const rescued=a.rescue==="fire"||(a.rescue==="aid"&&c112);
+    if(a.rescue==="fire"){fx.safety+=10;lines.push(["g","All three missing people found within 9 minutes","The fire team with breathing apparatus reached Hall B and the boiler house first."]);}
+    else if(a.rescue==="aid"){fx.safety+=2;lines.push(["m","Search slowed by steam","First-aiders without breathing apparatus waited for the Fire Force to reach the boiler house."]);}
+    else {fx.safety-=12;lines.push(["b","Nobody was sent to search","The technician in the boiler house was found 40 minutes later with smoke inhalation."]);}
+    if(a.isolate==="maint"){fx.safety+=6;fx.cont+=6;lines.push(["g","Autoclaves 1 and 2 isolated and vented under control","The incident stayed in one autoclave."]);}
+    else {fx.safety-=6;fx.cont-=8;lines.push(["b","Autoclave 1 tripped its relief valve at 03:20","A second steam release shut Hall B for longer."]);}
+    if(a.evac){fx.safety+=asked.has("wind")?6:4;lines.push(["g","Accommodation woken and moved upwind","Residents were clear before the plume arrived."]);}
+    else {fx.safety-=8;fx.trust-=6;lines.push(["b","Residents woke to steam and smoke","Videos from the accommodation began circulating at 03:40."]);}
+    if(a.gate==="sec"){fx.cont+=2;lines.push(["g","Responders guided straight to Hall B",asked.has("gate")?"Through the clear north gate.":"The guard found the clear gate on the way."]);}
+    else if(!a.gate){fx.safety-=3;lines.push(["m","Fire Force lost minutes at the blocked south gate","Nobody was there to guide them in."]);}
+    if(must==="A"){fx.safety+=3;lines.push(["g","Muster A was upwind and safe",""]);} else {fx.safety-=5;lines.push(["b","Muster B was downwind","The head count was moved under the plume at 03:10."]);}
+    if(stop){fx.safety+=4;fx.cont-=4;lines.push(["m","Line 2 stopped, Hall A cleared","Tonight’s output for the government order is lost, but nobody is working beside the release."]);}
+    else {fx.safety-=4;fx.trust-=3;lines.push(["b","Fire Force ordered Line 2 stopped on arrival","And asked why people were still working in Hall A."]);}
+    const best=["rescue","isolate","protect","order"]; const pr=order.reduce((s,k,i)=>s+(k===best[i]?1:0),0);
+    if(order[0]!=="rescue"){fx.trust-=3;lines.push(["m","Life safety was not your first written priority","The Board will read the priority list in the log."]);}
+    if(timedOut){fx.safety-=5;fx.trust-=3;lines.unshift(["b","The deadline passed before approval","The plan went out as it stood."]);}
+    S.facts.rescued=rescued&&a.rescue!==undefined; S.facts.allAccounted=a.rescue==="fire"||a.rescue==="aid"; S.facts.asked=[...asked]; S.facts.stop=stop;
+    return {fx,lines,pr};
+  };
+  let done=false;
+  const close=(to)=>{ if(done)return; done=true; stopClock(); const r=evaluate(to); decisionLog(r); };
+  wireHold("approve1",()=>close(false));
+  startClock(sc.mins,true,()=>close(true));
+}
+function decisionLog(r){
+  const KN=[["k1","Three people were unaccounted for",true],["k2","Autoclaves 1 and 2 were pressurised",S.facts.asked.includes("press")],["k3","The plume was heading to the accommodation",S.facts.asked.includes("wind")],["k4","The cause was operator error",false],["k5","Nobody was inside Hall B",false]];
+  $("#modal").innerHTML=`<div class="eyebrow">Decision log &middot; 30 seconds</div><h3>Record your decision before you move on</h3><p class="muted" style="margin:4px 0 12px">What you write tonight is what the Board and the investigators will read. Separate what you know from what you assume.</p>
+   <b style="font-size:14px">What I knew for certain</b><div class="picks" id="pk">${KN.map(k=>`<button data-k="${k[0]}" aria-pressed="false">${k[1]}</button>`).join("")}</div>
+   <b style="font-size:14px">When I will review the decision</b><div class="picks" id="rv"><button data-r="15" aria-pressed="false">In 15 minutes or on new information</button><button data-r="end" aria-pressed="false">When the Fire Force leaves</button><button data-r="no" aria-pressed="false">No review needed</button></div>
+   <div class="foot"><span class="muted">Only record as certain what you actually confirmed.</span><button class="btn" id="logIt">Record the decision</button></div>`;
+  $("#ov").classList.add("on");
+  $$("#pk button").forEach(b=>b.onclick=()=>b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")==="true"?"false":"true"));
+  $$("#rv button").forEach(b=>b.onclick=()=>{$$("#rv button").forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");});
+  $("#logIt").onclick=()=>{
+    const chosen=$$("#pk button[aria-pressed=true]").map(b=>b.dataset.k); const rev=($("#rv button[aria-pressed=true]")||{dataset:{}}).dataset.r;
+    let wrong=0,right=0; KN.forEach(k=>{const c=chosen.includes(k[0]); if(c&&k[2])right++; if(c&&!k[2])wrong++;});
+    if(wrong){r.fx.trust-=4*wrong;r.lines.push(["b",`${wrong} assumption${wrong>1?"s":""} logged as fact`,"Investigators flagged the log; speculation about cause is a serious liability."]);}
+    else if(right>=2){r.fx.trust+=4;r.lines.push(["g","A clean, factual decision log","Known facts separated from assumptions."]);}
+    if(rev==="15"){r.fx.safety+=2;r.lines.push(["g","Review set for 15 minutes","You caught the change in wind at 03:05."]);} else {r.fx.safety-=2;r.lines.push(["m","No early review point","Fast-moving incidents need decisions revisited."]);}
+    $("#ov").classList.remove("on");
+    finishScene({fx:r.fx,lines:r.lines,head:r.fx.safety>=20?"The site is under control":"The site is safe, at a cost",sub:"Hall B is closed. Both injured operators are in hospital.",lesson:"Life safety first, then stop escalation, then protect the community, then the business. Information is worth its time only when it changes a decision; record facts and assumptions separately."});
+  };
+}
+
+/* ---------- Scene 2: structure ---------- */
+function scStructure(sc){
+  const CARDS=[
+   ["pub","Approve the Group’s public statement","gold","Reputation-level decisions sit with the strategic level."],
+   ["plants","Decide whether to suspend production at the other plants","gold","A Group-wide operating decision."],
+   ["spend","Approve emergency spending above normal limits","gold","Financial authority belongs to the strategic level."],
+   ["family","Coordinate hospital visits and family liaison","silver","Tactical coordination across HR, HSE and Comms."],
+   ["stock","Reallocate finished stock between customers","silver","Tactical: turns strategic priorities into a plan."],
+   ["valve","Isolate and vent Autoclaves 1 and 2","bronze","Operational work on site."],
+   ["access","Control access at the north gate","bronze","Operational site control."],
+   ["leave","Approve routine leave requests for next week","none","Business as usual: keep it out of the crisis room."]];
+  const COLS=[["gold","Strategic","Direction, priorities, reputation, money"],["silver","Tactical","Turns priorities into coordinated plans"],["bronze","Operational","Hands-on work at the site"],["none","Not for the CMT","Leave with line management"]];
+  $("#main").innerHTML=sceneHead(sc,"Your phone has 41 missed calls. The CEO, the plant manager, HSE, HR and Sales are all making decisions in parallel, and three versions of the story are on internal WhatsApp. Put each decision at the right level, then set the team’s rhythm.")+
+  `<div class="alert info"><b>03:47 WHATSAPP</b><span>Sales group: &ldquo;Is it true the whole plant exploded?? Customers are calling me.&rdquo;</span></div>
+  <div class="panel" id="sortp"><h4>Who decides what? <small>drag each card into a column, or tap then tap</small></h4>
+   <div class="slot pool" data-slot="pool" data-ph="All cards placed" style="flex-direction:row;flex-wrap:wrap">${CARDS.map(c=>`<div class="token" data-id="${c[0]}">${c[1]}</div>`).join("")}</div>
+   <div class="sortgrid" style="margin-top:12px">${COLS.map(c=>`<div class="sortcol"><h5>${c[1]}</h5><p>${c[2]}</p><div class="slot" data-slot="${c[0]}" data-ph="Drop here" style="min-height:120px"></div></div>`).join("")}</div>
+  </div>
+  <div class="grid2" style="margin-top:16px">
+   <div class="panel"><h4>Meeting rhythm</h4>
+    <div class="toggles">
+     <div class="tog" style="flex-wrap:wrap">The CMT meets every
+      <label><input type="radio" name="rh" value="1"> hour</label><label><input type="radio" name="rh" value="4"> 4 hours</label><label><input type="radio" name="rh" value="12"> 12 hours</label></div>
+     <div class="tog" style="flex-wrap:wrap">Situation report owner
+      <select id="sitrep" style="border:1px solid var(--line);border-radius:8px;padding:6px"><option value="">Choose a seat</option>${SEATS.map(s=>`<option value="${s.id}">${s.name}</option>`).join("")}</select></div>
+     <label class="tog"><input type="checkbox" id="onevoice"> One spokesperson; all external contact goes through Communications</label>
+     <label class="tog"><input type="checkbox" id="liaison"> Assign a family liaison officer at the hospital now</label>
+    </div></div>
+   <div class="panel"><h4>Live pressure <small>updates as you work</small></h4><div id="press" class="outc"></div></div>
+  </div>
+  <div class="foot"><span class="muted" id="cnt">0 of 8 cards placed</span>${holdBtn("approve2","Activate the Crisis Management Team")}</div>`;
+  const msgs=[["Plant manager","I’ve told the Fire Force we can restart Line 2 by 06:00. OK?"],["CEO","Who is speaking for us? I have the Minister’s office on the other line."],["HR","Both families are at the hospital asking for someone from the company."],["Sales","Should I tell customers deliveries are fine this week?"]];
+  let mi=0; const pushMsg=()=>{ if(mi>=msgs.length||!document.getElementById("press"))return; const m=msgs[mi++]; $("#press").insertAdjacentHTML("afterbegin",`<div class="oc m"><i>!</i><div><b>${m[0]}</b><small>${esc(m[1])}</small></div></div>`); beep(600,.08); setTimeout(pushMsg,9000);}; setTimeout(pushMsg,1500);
+  dnd($("#sortp"),()=>{ const n=CARDS.filter(c=>!inSlot($("#sortp"),"pool").includes(c[0])).length; $("#cnt").textContent=`${n} of 8 cards placed`; });
+  wireHold("approve2",()=>{
+    const fx={safety:0,trust:0,cont:0},lines=[]; let right=0;
+    CARDS.forEach(c=>{ const where=COLS.find(col=>inSlot($("#sortp"),col[0]).includes(c[0])); const t=$(`#sortp .token[data-id="${c[0]}"]`); const ok=where&&where[0]===c[2]; if(ok)right++; t.classList.add(ok?"ok":"no"); });
+    fx.trust+=(right-5)*2; fx.cont+=(right-5);
+    lines.push([right>=7?"g":right>=5?"m":"b",`${right} of 8 decisions sit at the right level`,right>=7?"Strategy stays with the crisis team leaders, site work stays on site.":"Some decisions will now be made twice, or not at all."]);
+    if(inSlot($("#sortp"),"gold").includes("valve")||inSlot($("#sortp"),"gold").includes("access")){fx.cont-=3;lines.push(["b","The strategic level is micromanaging the site","The Incident Commander waits for approval on valve work."]);}
+    const rh=(document.querySelector("input[name=rh]:checked")||{}).value;
+    if(rh==="4"){fx.cont+=4;fx.trust+=2;lines.push(["g","A 4-hour rhythm","Time to act between meetings, often enough to keep control."]);}
+    else if(rh==="1"){fx.cont-=3;lines.push(["m","Meeting every hour","The team spends the night in meetings instead of acting."]);}
+    else {fx.trust-=4;lines.push(["b",rh?"12 hours between meetings":"No meeting rhythm set","Decisions drift and the CEO calls each lead directly."]);}
+    const sr=$("#sitrep").value; if(sr==="OS"||sr==="CL"||sr==="PH"||sr==="CM"){fx.trust+=3;lines.push(["g","One SitRep owner: "+SEATS.find(s=>s.id===sr).name,"SitRep #1 issued at 04:30."]);} else if(sr==="IC"){fx.safety-=2;lines.push(["m","The Incident Commander also writes the SitRep","Attention pulled away from the site."]);} else {fx.trust-=3;lines.push(["b","No SitRep owner","Three versions of the truth keep circulating."]);}
+    if($("#onevoice").checked){fx.trust+=5;S.facts.onevoice=true;lines.push(["g","One voice for ACICO","Sales stop improvising answers to customers."]);} else {fx.trust-=5;lines.push(["b","No single spokesperson","The plant manager’s restart promise reaches a customer."]);}
+    if($("#liaison").checked){fx.trust+=5;S.facts.liaison=true;lines.push(["g","Family liaison at the hospital by 04:15","The families hear from ACICO before they hear from social media."]);} else {fx.trust-=4;lines.push(["b","Families waited until morning","One relative speaks to a journalist at 06:00."]);}
+    setTimeout(()=>finishScene({fx,lines,head:right>=7?"The Crisis Management Team is in control":"The team is active, but roles are blurred",sub:`${right} of 8 decisions placed correctly.`,lesson:"Structure beats heroics. Clear strategic, tactical and operational roles, a fixed meeting rhythm and one source of truth turn many voices into one response."}),900);
+  });
+  startClock(sc.mins,false);
+}
+
+/* ---------- Scene 3: statement ---------- */
+function scStatement(sc){
+  const truthAll=S.facts.allAccounted;
+  const BLOCKS=[
+   ["a","At 02:47 on Sunday, a steam release occurred in one production hall at our AAC plant.","what",0],
+   ["b","A minor technical issue occurred, with no impact on operations.","what",-3],
+   ["c","Two colleagues are receiving hospital treatment and are in a stable condition. Our thoughts are with them and their families.","people",0],
+   ["d","No one was injured in the incident.","people",-4],
+   ["e","All night-shift colleagues are safe and accounted for.","people",truthAll?0:-4],
+   ["f","Emergency services responded immediately, the area is secured, and we are cooperating fully with the authorities.","doing",0],
+   ["g","Initial findings suggest the incident was caused by operator error.","doing",-3],
+   ["h","We will share a further update at 09:00 today.","next",0],
+   ["i","We will comment once the investigation has concluded.","next",-2]];
+  const SLOTS=[["what","What happened"],["people","Our people"],["doing","What we are doing"],["next","Next update"]];
+  let views=118000, t0=Date.now();
+  $("#main").innerHTML=sceneHead(sc,"A 40-second video of steam over the plant, filmed from the road, is trending. Comments claim workers were killed. A reporter from a national daily wants a statement before the morning edition. Build a holding statement from verified blocks and release it.")+
+  `<div class="grid2">
+   <div class="panel" id="stp"><h4>Holding statement builder <small>one block per section</small></h4>
+     ${SLOTS.map(s=>`<div class="slotlabel" style="margin-top:8px"><span>${s[1]}</span></div><div class="slot" data-slot="${s[0]}" data-max="1" data-ph="Drop a block"></div>`).join("")}
+     <h4 style="margin-top:16px">Available blocks <small>${truthAll?"head count confirmed in scene 1":"head count was not fully confirmed in scene 1"}</small></h4>
+     <div class="slot" data-slot="pool" data-ph="All blocks used">${BLOCKS.map(b=>`<div class="token" data-id="${b[0]}" style="font-size:13.5px">${esc(b[1])}</div>`).join("")}</div>
+     <h4 style="margin-top:16px">Release to</h4>
+     <div class="toggles" style="grid-template-columns:1fr 1fr">
+      <label class="tog"><input type="checkbox" id="chStaff"> Staff &amp; families first</label><label class="tog"><input type="checkbox" id="chCust"> Customers</label>
+      <label class="tog"><input type="checkbox" id="chMedia"> Media</label><label class="tog"><input type="checkbox" id="chSocial"> Group social channels</label></div>
+   </div>
+   <div>
+    <div class="phone"><div class="scr">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><b>Trending now</b><span class="mono" style="font-size:12px;color:var(--grey)">views</span></div>
+      <div class="views" id="views">118,000</div>
+      <div id="sent" style="margin:6px 0 10px"><div class="slotlabel"><span>Public sentiment</span><small id="sentTxt">angry</small></div><div class="prog"><i id="sentBar" style="width:25%;background:var(--bad)"></i></div></div>
+      <div id="feed"></div>
+    </div></div>
+    <div class="panel" style="margin-top:14px" id="jq"><h4>The reporter&rsquo;s first question <small>after release</small></h4><p class="muted" style="margin:0">Release the statement to take the reporter&rsquo;s questions.</p></div>
+   </div>
+  </div>
+  <div class="foot"><span class="muted" id="hint3">Every minute without a statement adds views and rumours.</span>${holdBtn("approve3","Release the holding statement")}</div>`;
+  const posts=["“Workers trapped in factory fire?”","“My cousin works there, nobody is answering”","“Another cover-up?”","“Ambulances were there at 3am”","“Why is the company silent?”"];
+  let pi=0; const vt=setInterval(()=>{ if(!document.getElementById("views")){clearInterval(vt);return;} views+=Math.round(900+Math.random()*1600); $("#views").textContent=views.toLocaleString("en-US"); if(Math.random()<.18&&pi<posts.length){$("#feed").insertAdjacentHTML("afterbegin",`<div class="feeditem"><b>@user${Math.floor(Math.random()*9000+1000)}</b>${esc(posts[pi++])}</div>`);} },1000);
+  dnd($("#stp"));
+  let released=false;
+  const release=(to)=>{
+    if(released)return; released=true; clearInterval(vt); stopClock();
+    const secs=Math.round((Date.now()-t0)/1000); const fx={safety:0,trust:0,cont:0},lines=[]; let score=0,fact=0;
+    SLOTS.forEach(([k,l])=>{ const id=inSlot($("#stp"),k)[0]; const b=BLOCKS.find(x=>x[0]===id);
+      if(!b){score-=2;lines.push(["m",`No “${l}” section`,"A gap the media will fill for you."]);return;}
+      if(b[2]!==k){score-=1;}
+      if(b[3]<0){score+=b[3];fact++; lines.push(["b",`“${b[1].slice(0,58)}…”`, b[0]==="e"?"Not confirmed when you released it. A hospital source contradicts you by 08:00.":b[0]==="d"?"False. The hospital confirms two burn patients within the hour.":b[0]==="g"?"Speculation about cause. The union and the families react angrily.":"Minimising or delaying reads as hiding something."]);}
+      else {score+=3;} });
+    fx.trust+=score; fx.trust+=fact?0:4;
+    if(!fact&&score>=10)lines.unshift(["g","A clear, factual, human statement","Quoted in full by two outlets; the “workers killed” rumour is corrected."]);
+    if($("#chStaff").checked){fx.trust+=4;lines.push(["g","Staff and families heard it first","No one learned the news from social media."]);} else {fx.trust-=3;lines.push(["b","Staff learned from the news","The night shift’s WhatsApp group fills with anger."]);}
+    if($("#chCust").checked){fx.cont+=3;} if($("#chMedia").checked){fx.trust+=2;} else {fx.trust-=3;lines.push(["m","Media not briefed","The story runs with “company did not respond”."]);}
+    if(secs>150||to){fx.trust-=5;lines.push(["b",`Released after ${Math.floor(secs/60)} min ${secs%60} s`,`${views.toLocaleString("en-US")} views before ACICO said anything.`]);} else {fx.trust+=3;lines.push(["g",`Released in ${Math.floor(secs/60)} min ${secs%60} s`,"Ahead of the morning edition."]);}
+    const nextOK=inSlot($("#stp"),"next")[0]==="h"; if(nextOK){addCommit("Public update at 09:00 on Sunday",3,"kept");}
+    const s=Math.max(5,Math.min(95,50+fx.trust*3)); $("#sentBar").style.width=s+"%"; $("#sentBar").style.background=s>60?"var(--good)":s>40?"var(--warn)":"var(--bad)"; $("#sentTxt").textContent=s>60?"sympathetic":s>40?"divided":"angry";
+    // journalist
+    const Q=[["“Was this caused by poor maintenance?”",[["It is too early to say what caused it. An investigation with the authorities is under way, and our focus tonight is on our two colleagues and their families.",3,"Bridging: no speculation, back to facts and care."],["The equipment was fully maintained; this was probably human error.",-5,"Speculation that blames staff. It becomes the headline."],["No comment.",-3,"Silence becomes the story."]]]];
+    $("#jq").innerHTML=`<h4>The reporter asks <small>choose your answer</small></h4><p style="margin:0 0 8px;font-weight:600">${Q[0][0]}</p><div class="qa">${Q[0][1].map((o,i)=>`<button data-q="${i}">${esc(o[0])}</button>`).join("")}</div>`;
+    $$("#jq button").forEach(b=>b.onclick=()=>{ const o=Q[0][1][+b.dataset.q]; $$("#jq button").forEach(x=>x.disabled=true); b.classList.add("pick"); fx.trust+=o[1]; lines.push([o[1]>0?"g":"b","Interview answer: "+(o[1]>0?"bridged to facts and care":"went off message"),o[2]]);
+      setTimeout(()=>finishScene({fx,lines,head:fact?"The statement created a second story":"ACICO filled the silence first",sub:`Statement released to ${["chStaff","chCust","chMedia","chSocial"].filter(i=>$("#"+i).checked).length} audiences.`,lesson:"Fill the information vacuum before rumour does. A holding statement gives verified facts, shows care, states actions and promises the next update. Never trade accuracy for comfort."}),700); });
+    $("#hint3").textContent="Statement released. Answer the reporter to close the scene.";
+  };
+  wireHold("approve3",()=>release(false));
+  startClock(sc.mins,true,()=>{ $("#approve3").disabled=true; release(true); });
+}
+
+/* ---------- Scene 4: supply ---------- */
+function scSupply(sc){
+  const CUST=[["gov","Main contractor · government housing","Penalties from day 3 of delay; crews booked Thursday",3000,true],["min","Ministry school extension","Must finish before the school year",900,true],["deal","Building-materials dealers","Can source elsewhere, but may not come back",1200,false],["homes","ACICO Homes villa clients","Private families mid-build, own brand",600,false]];
+  const CAP=4200;
+  $("#main").innerHTML=sceneHead(sc,"Engineers estimate 10 days to repair Autoclave 3 and certify Hall B. You have 4 days of stock and spare capacity at a sister plant, but customers are owed 5,700 m³ in the next two weeks. Allocate what you have, decide what to promise, and set the restart.")+
+  `<div class="alert info"><b>10:47 EMAIL</b><span>Main contractor&rsquo;s project director: &ldquo;Our crews are booked for block work from Thursday. I need a confirmed plan today.&rdquo;</span></div>
+  <div class="panel"><h4>Available supply, next 14 days <small><span id="used">0</span> of ${CAP.toLocaleString()} m&sup3; allocated</small></h4>
+    <div class="capbar" id="cap"></div>
+    <div class="legend"><span><i style="background:#E06931"></i>Main contractor</span><span><i style="background:#5B6D80"></i>Ministry</span><span><i style="background:#2F9283"></i>Dealers</span><span><i style="background:#8C6BB1"></i>ACICO Homes</span><span>Supply: 2,400 m&sup3; stock + 1,800 m&sup3; sister plant</span></div>
+  </div>
+  <div style="display:grid;gap:10px;margin-top:14px">${CUST.map(c=>`<div class="cust"><div><b>${c[1]}</b><small>${c[2]} &middot; needs <span class="mono">${c[3].toLocaleString()}</span> m&sup3;</small></div>
+     <div><input type="range" min="0" max="${c[3]}" step="100" value="0" id="r-${c[0]}" aria-label="Allocation for ${c[1]}"><div class="slotlabel"><small><span class="mono" id="v-${c[0]}">0</span> m&sup3; &middot; <span id="p-${c[0]}">0</span>%</small></div></div>
+     <div><select id="m-${c[0]}" aria-label="Message to ${c[1]}"><option value="">What do you tell them?</option><option value="full">Confirm full volume on time</option><option value="phase">Phased schedule with firm dates</option><option value="fm">Pause under force majeure</option></select></div></div>`).join("")}</div>
+  <div class="grid2" style="margin-top:14px"><div class="panel"><h4>Restart of Line 2 and Hall B</h4><div class="toggles">
+    <label class="tog"><input type="radio" name="rs" value="48"> Restart Line 2 at T+48h, after the safety sign-off</label>
+    <label class="tog"><input type="radio" name="rs" value="24"> Restart Line 2 at T+24h, sign-off to follow</label>
+    <label class="tog"><input type="radio" name="rs" value="hold"> Keep everything stopped until Hall B is repaired</label></div></div>
+   <div class="panel"><h4>Plan check <small>updates as you change the plan</small></h4><div id="chk" class="outc"></div></div></div>
+  <div class="foot"><span class="muted">Every promise you choose is logged as a commitment in ACICO&rsquo;s name.</span>${holdBtn("approve4","Approve the supply plan")}</div>`;
+  const colors={gov:"#E06931",min:"#5B6D80",deal:"#2F9283",homes:"#8C6BB1"};
+  const upd=()=>{ let used=0; CUST.forEach(c=>{const v=+$("#r-"+c[0]).value;used+=v;$("#v-"+c[0]).textContent=v.toLocaleString();$("#p-"+c[0]).textContent=Math.round(v/c[3]*100);});
+    $("#used").textContent=used.toLocaleString(); $("#used").style.color=used>CAP?"var(--bad)":"";
+    $("#cap").innerHTML=CUST.map(c=>`<i style="width:${+$("#r-"+c[0]).value/Math.max(CAP,used)*100}%;background:${colors[c[0]]}"></i>`).join("");
+    const ch=[]; if(used>CAP)ch.push(["b",`Over capacity by ${(used-CAP).toLocaleString()} m³`,"This plan cannot be delivered."]);
+    CUST.forEach(c=>{const v=+$("#r-"+c[0]).value,m=$("#m-"+c[0]).value; if(m==="full"&&v<c[3])ch.push(["b",`Promising ${c[1].split(" ·")[0]} full volume`,`Only ${v.toLocaleString()} of ${c[3].toLocaleString()} m³ allocated.`]);});
+    const rs=(document.querySelector("input[name=rs]:checked")||{}).value; if(rs==="24")ch.push(["b","Restart before safety sign-off","Inspectors have not cleared the site."]);
+    if(!ch.length)ch.push(["g","No conflicts in the plan so far",""]);
+    $("#chk").innerHTML=ch.map(l=>`<div class="oc ${l[0]}"><i>${l[0]==="g"?"&#10003;":"!"}</i><div><b>${esc(l[1])}</b><small>${esc(l[2])}</small></div></div>`).join(""); return used; };
+  CUST.forEach(c=>{$("#r-"+c[0]).oninput=upd;$("#m-"+c[0]).onchange=upd;}); $$("input[name=rs]").forEach(r=>r.onchange=upd); upd();
+  wireHold("approve4",()=>{
+    const used=upd(); const fx={safety:0,trust:0,cont:0},lines=[];
+    const al=k=>+$("#r-"+k).value, msg=k=>$("#m-"+k).value;
+    if(used>CAP){fx.cont-=8;fx.trust-=6;lines.push(["b","The plan exceeds what the Group can make","Shortfalls appear on day 5."]);}
+    const crit=(al("gov")/3000+al("min")/900)/2; fx.cont+=Math.round((crit-.6)*20);
+    lines.push([crit>=.8?"g":crit>=.6?"m":"b",`Critical customers covered at ${Math.round(crit*100)}%`,crit>=.8?"Government projects keep moving.":"Government projects slip, and penalties start."]);
+    if(al("homes")>=300){fx.trust+=3;lines.push(["g","ACICO Homes families protected","Private homeowners mid-build were not left without blocks."]);}
+    let broken=0; CUST.forEach(c=>{const m=msg(c[0]),v=al(c[0]);
+      if(m==="full"){addCommit(`Full ${c[3].toLocaleString()} m³ on time to ${c[1].split(" ·")[0]}`,4,v>=c[3]?"kept":"broken"); if(v<c[3])broken++;}
+      else if(m==="phase"){addCommit(`Phased schedule with firm dates to ${c[1].split(" ·")[0]}`,4,v>0?"kept":"broken"); fx.trust+=2;}
+      else if(m==="fm"){fx.trust-=c[4]?4:2;lines.push(["m",`Force majeure to ${c[1].split(" ·")[0]}`,c[4]?"Legally safe, but a competitor calls them the same afternoon.":"They source elsewhere."]);}
+      else {fx.trust-=2;lines.push(["m",`${c[1].split(" ·")[0]} heard nothing`,"They call the CEO directly."]);} });
+    if(broken){fx.trust-=5*broken;lines.push(["b",`${broken} promise${broken>1?"s":""} of full volume you cannot keep`,"Logged for the Board review."]);}
+    const rs=(document.querySelector("input[name=rs]:checked")||{}).value;
+    if(rs==="48"){fx.cont+=6;fx.safety+=3;lines.push(["g","Line 2 back at T+52h after sign-off","Sister-plant volume bridges the gap."]);}
+    else if(rs==="24"){fx.safety-=10;fx.trust-=4;fx.cont+=2;lines.push(["b","Early restart triggered a near-miss","Inspectors suspend Hall A for two days."]);}
+    else {fx.cont-=8;lines.push(["m","Everything stays stopped","Safe, but the shortfall doubles."]);}
+    S.facts.supplyOK=crit>=.8&&!broken;
+    finishScene({fx,lines,head:crit>=.8&&!broken?"Customers have a plan they can believe":"Supply is stretched and promises are at risk",sub:`${used.toLocaleString()} of ${CAP.toLocaleString()} m³ allocated.`,lesson:"Continuity is planned, not improvised. Know your critical customers and recovery times (Business Impact Analysis), then make promises you can keep. Over-promising moves the crisis a few days down the road."});
+  });
+  startClock(sc.mins,false);
+}
+
+/* ---------- Scene 5: bank ---------- */
+function scBank(sc){
+  const QS=[["q1","What does your credit committee need on Tuesday?","A clear impact range and a recovery timeline. Not perfect numbers, a credible range.","Needs a range, not perfection"],
+   ["q2","What worried you most this morning?","I learned about it from the press. After the restructuring we were promised no surprises.","Wants no surprises"],
+   ["q3","How does insurance affect your view?","If the loss is insured and the claim is lodged, the exposure looks very different to the committee.","Insurance changes the exposure"],
+   ["q4","What would make you comfortable?","A named contact and regular written updates until production is back to normal.","Wants a named contact and updates"]];
+  const PROPS=[["range","Share the impact range now: 10–14 days of lost output and an estimated KD range, with a recovery timeline","q1",14,"That is exactly what the committee needs."],
+   ["sorry","Apologise for the late call and commit to no surprises from here","q2",12,"Thank you. That matters more than you might think."],
+   ["ins","Confirm the insurance claim will be lodged within 48 hours, with the broker’s confirmation","q3",12,"Good. Send me the broker’s letter."],
+   ["weekly","A weekly written update from the CFO, named contact, until full restart","q4",12,"A named contact and a rhythm. I can work with that."],
+   ["wait","We will share numbers once they are final","",-12,"So I go into committee with nothing?"],
+   ["rel","Remind him of the long relationship between ACICO and the bank","",-2,"I appreciate that, but the committee needs facts."],
+   ["chair","Tell him the Chairman will call his CEO if needed","",-15,"Going over my head will not help you."]];
+  let stance=25, asked=new Set(), t=180;
+  $("#main").innerHTML=sceneHead(sc,"The relationship manager at one of the creditor banks has seen the news. The restructuring agreements are still fresh and his credit committee meets on Tuesday. Listen first: every question reveals what drives him. Then offer up to three proposals.")+
+  `<div class="grid2">
+   <div class="panel">
+    <div class="person"><div class="av">TM</div><div><b style="font-size:17px">Tareq Al-Mansour</b><div class="muted" style="font-size:13px">Senior Relationship Manager &middot; creditor bank (fictional)</div></div></div>
+    <div class="bubble" id="say">I saw the news before anyone from ACICO called me. My committee meets on Tuesday. Help me understand why I should not be worried.</div>
+    <svg class="gauge" viewBox="0 0 300 160" width="100%" style="max-width:360px;display:block;margin:14px auto 0">
+      <path d="M30 140 A120 120 0 0 1 270 140" fill="none" stroke="#ece7e1" stroke-width="18"/>
+      <path d="M30 140 A120 120 0 0 1 90 36" fill="none" stroke="#D04437" stroke-width="18" opacity=".5"/>
+      <path d="M90 36 A120 120 0 0 1 210 36" fill="none" stroke="#D99A16" stroke-width="18" opacity=".5"/>
+      <path d="M210 36 A120 120 0 0 1 270 140" fill="none" stroke="#2E9E6B" stroke-width="18" opacity=".5"/>
+      <text x="22" y="158">Opposed</text><text x="132" y="14">Neutral</text><text x="236" y="158">Supportive</text>
+      <g id="gn" style="transition:transform .8s cubic-bezier(.3,1.4,.5,1)"><line x1="150" y1="140" x2="150" y2="40" stroke="#262626" stroke-width="4" stroke-linecap="round"/><circle cx="150" cy="140" r="8" fill="#262626"/></g>
+    </svg>
+    <div class="slotlabel" style="margin-top:10px"><span>What drives him</span><small id="qt">call time 03:00</small></div>
+    <div class="interests" id="ints">${QS.map(q=>`<span class="hidden" id="in-${q[0]}">interest not yet revealed</span>`).join("")}</div>
+   </div>
+   <div>
+    <div class="panel"><h4>1 &middot; Listen first <small>each question uses 30 s of the call</small></h4><div class="chipq">${QS.map(q=>`<button class="ask" data-q="${q[0]}"><span style="font-size:14px">${q[1]}</span><small>&minus;30s</small></button>`).join("")}</div></div>
+    <div class="panel" style="margin-top:14px" id="bp"><h4>2 &middot; Make your proposals <small>up to three</small></h4>
+      <div class="slot" data-slot="offer" data-max="3" data-ph="Drag up to three proposals here" style="min-height:70px"></div>
+      <div class="slot" data-slot="pool" data-ph="" style="margin-top:10px;border:0;padding:0">${PROPS.map(p=>`<div class="token" data-id="${p[0]}" style="font-size:13.5px">${esc(p[1])}</div>`).join("")}</div></div>
+   </div>
+  </div>
+  <div class="foot"><span class="muted">Proposals that answer an interest you uncovered land far better.</span>${holdBtn("approve5","Close the call with these proposals")}</div>`;
+  const setG=()=>{$("#gn").style.transform=`rotate(${-90+stance*1.8}deg)`;$("#gn").style.transformOrigin="150px 140px";}; setG();
+  const qt=()=>{$("#qt").textContent=`call time ${String(Math.floor(Math.max(t,0)/60)).padStart(2,"0")}:${String(Math.max(t,0)%60).padStart(2,"0")}`;};
+  $$("#main .ask").forEach(b=>b.onclick=()=>{ const q=QS.find(x=>x[0]===b.dataset.q); if(asked.has(q[0])||t<=0)return; asked.add(q[0]); t-=30; qt(); b.disabled=true; $("#say").textContent=q[2]; $("#say").animate([{opacity:.3},{opacity:1}],{duration:400});
+    const el=$("#in-"+q[0]); el.className=""; el.textContent=q[3]; stance=Math.min(100,stance+4); setG(); beep(500,.08); });
+  dnd($("#bp"));
+  wireHold("approve5",()=>{
+    const offer=inSlot($("#bp"),"offer"); const fx={safety:0,trust:0,cont:0},lines=[];
+    offer.forEach(id=>{const p=PROPS.find(x=>x[0]===id); let d=p[3]; if(p[2]&&!asked.has(p[2]))d=Math.round(d/2); stance=Math.max(0,Math.min(100,stance+d));
+      lines.push([d>6?"g":d>0?"m":"b",p[1].split(",")[0].split(":")[0],`Tareq: “${p[4]}”${p[2]&&!asked.has(p[2])?" (landed weaker: you had not asked what he needed)":""}`]);
+      if(id==="weekly")addCommit("Weekly written CFO update to the bank until full restart",5,"pending");
+      if(id==="ins")addCommit("Insurance claim lodged within 48 hours",5,"pending");
+      if(id==="sorry")addCommit("No surprises for creditor banks",5,"pending");});
+    setG(); $("#say").textContent=stance>=70?"Thank you. I can take this to the committee with confidence.":stance>=45?"I will take this to the committee, but they will have questions.":"I will have to recommend that the committee reviews the facility.";
+    if(!offer.length)lines.push(["b","No proposals made","The call ends with nothing for the committee."]);
+    lines.unshift([asked.size>=3?"g":asked.size>=1?"m":"b",`You asked ${asked.size} question${asked.size===1?"":"s"} before proposing`,asked.size>=3?"You understood his interests before you offered anything.":"You proposed before you understood what he needed."]);
+    fx.trust=Math.round((stance-45)/3); fx.cont=Math.round((stance-45)/5);
+    lines.push([stance>=70?"g":stance>=45?"m":"b",`Bank stance: ${stance>=70?"supportive":stance>=45?"neutral":"opposed"}`,stance>=70?"The committee notes the recovery plan; the facility is unaffected.":stance>=45?"The committee asks for a formal letter and a meeting.":"The committee puts the facility under review."]);
+    S.facts.bank=stance;
+    setTimeout(()=>finishScene({fx,lines,head:stance>=70?"The bank is on your side":"The bank is watching closely",sub:"Call closed after "+(180-t)+" seconds of questions.",lesson:"Stakeholder confidence is earned before it is needed. Listen first, answer the interests you uncover, and share a credible range now rather than precision later. Every promise you make becomes part of the record."}),1100);
+  });
+  qt(); startClock(sc.mins,false);
+}
+
+/* ================= RESULTS ================= */
+function renderResults(){
+  stopClock(); S.scene=SCENES.length; chrome(); $("#clock").textContent="T+72h"; $("#clockLab").innerHTML="board<br>review";
+  // resolve pending commitments
+  S.commit.forEach(c=>{ if(c.check==="pending")c.check=S.rings.trust>=55?"kept":"at risk"; });
+  const R=S.rings; const score=Math.round(R.safety*.4+R.trust*.35+R.cont*.25);
+  const verdict=score>=75?["Anchored","The Group held steady. People were protected first, the team took control fast, and stakeholders kept their confidence."]:score>=60?["Steady","A sound response with costly moments. The Board will focus on the scenes marked below."]:score>=45?["Adrift","ACICO came through, but slow or defensive calls cost trust and continuity."]:["Overwhelmed","The crisis led the Group. This is exactly the gap the Crisis Management program is designed to close."];
+  const sc=k=>{const r=S.results[k];return r?Object.values(r.fx).reduce((a,b)=>a+b,0):0};
+  const comp=[["Decisions under pressure",sc(0),"Day 3 · decisions under uncertainty, decision log",SEATS[1]],["Crisis team structure",sc(1),"Day 2 · crisis team roles, meeting rhythm",SEATS[0]],["Crisis communication",sc(2),"Day 3 · holding statement, bridging",SEATS[2]],["Business continuity",sc(3),"Day 4 · Business Impact Analysis",SEATS[3]],["Stakeholder confidence",sc(4),"Day 3 · stakeholder mapping",SEATS[0]],["Keeping commitments",S.commit.length?Math.round((S.commit.filter(c=>c.check==="kept").length/S.commit.length-.5)*40):0,"Day 4 · lessons-learned review",SEATS[4]]];
+  const pct=v=>Math.max(5,Math.min(100,50+v*2.2));
+  $("#main").innerHTML=`<div class="shead"><div><div class="eyebrow">T+72:00 &middot; the Board review</div><h2>${esc(S.team)}: how did the Group come through?</h2><p>The Board reads your decisions, your log and every commitment made in ACICO&rsquo;s name. Use this screen for the team debrief with your facilitator.</p></div></div>
+  <div class="grid2">
+   <div class="card" style="display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center"><div><div class="eyebrow">Crisis readiness</div><div class="score" id="sc">0</div></div><div><div class="verdict">${verdict[0]}</div><p class="muted" style="margin:6px 0 12px">${verdict[1]}</p>
+     <div style="display:flex;gap:16px;flex-wrap:wrap">${RINGS.map(([k,l,,hex])=>`<div class="ring">${ringSVG(R[k],hex)}<div><b>${R[k]}</b><small>${l}</small></div></div>`).join("")}</div></div></div>
+   <div class="card"><h3 style="font-size:19px;margin-bottom:6px">Commitments made in ACICO&rsquo;s name</h3>
+     ${S.commit.length?S.commit.map(c=>`<div class="cm"><span>${esc(c.text)} <small class="muted">&middot; scene ${c.scene}</small></span><span class="badge ${c.check==="kept"?"k":c.check==="broken"?"r":"p"}">${c.check==="kept"?"KEPT":c.check==="broken"?"BROKEN":"AT RISK"}</span></div>`).join(""):`<p class="muted">No commitments were made. Customers and banks noticed the silence.</p>`}</div>
+  </div>
+  <h3 style="font-size:20px;margin:22px 0 10px">Competency map &middot; linked to the Crisis Management program days</h3>
+  <div class="comp">${comp.map(c=>`<div class="cp"><b>${c[0]}</b><div class="bar"><i style="width:${pct(c[1])}%;background:${pct(c[1])>=65?"var(--good)":pct(c[1])>=45?"var(--warn)":"var(--bad)"}"></i></div><small>${c[2]}<br>Lead seat: ${esc(seatName(c[3].id))}</small></div>`).join("")}</div>
+  <h3 style="font-size:20px;margin:22px 0 10px">Scene by scene</h3>
+  <div class="tl">${SCENES.map((s,i)=>{const r=S.results[i],t=sc(i);return `<div class="tlr"><span class="mono" style="font-size:12.5px;color:var(--orange-d)">${s.at.split(" ·")[0]}</span><div><b>${s.title}</b> <span class="muted">&middot; ${r?esc(r.head):"not played"}</span><br><small class="muted">Owner: ${esc(seatName(s.owner))}</small></div><span class="g" style="color:${t>=10?"var(--good)":t>=0?"var(--warn)":"var(--bad)"}">${t>0?"+":""}${t} pts</span></div>`}).join("")}</div>
+  <div class="card" style="margin-top:20px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap;background:linear-gradient(90deg,#fff,var(--orange-l))">
+   <div><div class="eyebrow">Knowledge Group &middot; Crisis Management program, Day 4</div><h3 style="font-size:22px">In the classroom, this runs as a live team exercise</h3><p class="muted" style="margin:6px 0 0;max-width:70ch">Five ACICO participants take the seats, a facilitator adds live injects, and the review is built from the team&rsquo;s own decision log and commitments.</p></div>
+   <div style="display:flex;gap:10px"><button class="btn" id="again">Play again</button><button class="btn ghost" id="home">Back to the briefing</button></div></div>`;
+  let n=0;const el=$("#sc");const iv=setInterval(()=>{n+=2;if(n>=score){n=score;clearInterval(iv);}el.textContent=n;},18);
+  $("#again").onclick=()=>{S.rings={safety:50,trust:50,cont:50};S.commit=[];S.results=[];S.facts={};S.scene=0;alarm();renderScene();};
+  $("#home").onclick=renderIntro; window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ================= GLOBAL ================= */
+$("#snd").onclick=()=>{S.sound=!S.sound;$("#snd").innerHTML=S.sound?"&#128266;":"&#128263;";};
+$("#fs").onclick=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{});}catch(e){}};
+renderIntro();
+})();
+</script>
+</body>
+</html>
